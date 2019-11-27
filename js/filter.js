@@ -1,4 +1,4 @@
-("use strict");
+"use strict";
 
 (function() {
 	window.filter = function() {
@@ -71,12 +71,17 @@
 						i--;
 					}
 				}
-				window.render["render"](
+				window["debounce"](
+					window.render["render"],
 					filteredLongAnnouncements,
 					filteredLongPins
-				);
+				)();
 			} else {
-				window.render["render"](filteredAnnouncements, filteredPins);
+				window["debounce"](
+					window.render["render"],
+					filteredAnnouncements,
+					filteredPins
+				)();
 			}
 		}
 
@@ -240,7 +245,11 @@
 								"announcementElements"
 							][i].querySelector(".popup__features");
 
-							for (j = 0; j < featuresList.children.length; j++) {
+							for (
+								let j = 0;
+								j < featuresList.children.length;
+								j++
+							) {
 								if (
 									featuresList.children[j].classList.contains(
 										`feature--${currentCheckbox}`

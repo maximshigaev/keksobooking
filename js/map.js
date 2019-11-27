@@ -1,4 +1,4 @@
-("use strict");
+"use strict";
 
 (function() {
 	const ORIGINAL_PIN_SPIKE_HEIGHT = 22;
@@ -8,29 +8,30 @@
 	let address = window.form["form"].querySelector("#address");
 	let mapCoords = map.getBoundingClientRect();
 
+	function Coordinates(coordX, coordY) {
+		(this.x = coordX), (this.y = coordY);
+	}
+
 	function originalPinMousedownHandler(downEvt) {
 		downEvt.preventDefault();
-		let startCoords = {
-			x: downEvt.clientX,
-			y: downEvt.clientY
-		};
-		let relativeShift = {
-			x: Math.round(
+		let startCoords = new Coordinates(downEvt.clientX, downEvt.clientY);
+		let relativeShift = new Coordinates(
+			Math.round(
 				startCoords["x"] -
 					window.form["originalPin"].getBoundingClientRect().x
 			),
-			y: Math.round(
+			Math.round(
 				startCoords["y"] -
 					window.form["originalPin"].getBoundingClientRect().y
 			)
-		};
+		);
 
 		function originalPinMousemoveHandler(moveEvt) {
 			moveEvt.preventDefault();
-			let shift = {
-				x: startCoords["x"] - moveEvt.clientX,
-				y: startCoords["y"] - moveEvt.clientY
-			};
+			let shift = new Coordinates(
+				startCoords["x"] - moveEvt.clientX,
+				startCoords["y"] - moveEvt.clientY
+			);
 			startCoords = {
 				x: moveEvt.clientX,
 				y: moveEvt.clientY

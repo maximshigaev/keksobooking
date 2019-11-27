@@ -1,4 +1,4 @@
-("use strict");
+"use strict";
 
 (function() {
 	window.form = {
@@ -55,12 +55,24 @@
 	);
 
 	function resetForm() {
+		let avatar = window.form["form"].querySelector(".notice__preview")
+			.firstElementChild;
+		let images = window.form["form"]
+			.querySelector(".form__photo-container")
+			.querySelectorAll("img");
+
+		avatar.src = "img/muffin.png";
+		images.forEach(image => image.remove());
+
 		document.querySelector(".map").classList.add("map--faded");
+
 		Array.from(window.form["formFieldsets"]).forEach(
 			fieldset => (fieldset.disabled = true)
 		);
 		inputs.forEach(input => (input.value = ""));
+
 		checkboxes.forEach(checkbox => (checkbox.checked = false));
+
 		selects.forEach(select => {
 			let defaultSelectedOption = select.querySelector(
 				"option[selected]"
@@ -73,16 +85,20 @@
 			input.style.borderWidth = "";
 		});
 		textArea.value = "";
+
 		window.form["addressInput"].value =
 			initialPinCoords["x"] + ", " + initialPinCoords["y"];
+
 		window.data["pinElements"].forEach(pinElement =>
 			pinElement.classList.add("hidden")
 		);
 		window.form["form"].classList.add("notice__form--disabled");
+
 		window.form["originalPin"].style.left =
 			initialPinCoords["x"] -
 			window.form["originalPin"].offsetWidth / 2 +
 			"px";
+
 		window.form["originalPin"].style.top =
 			initialPinCoords["y"] -
 			window.form["originalPin"].offsetHeight -

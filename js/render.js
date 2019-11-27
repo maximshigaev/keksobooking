@@ -1,4 +1,4 @@
-("use strict");
+"use strict";
 
 (function() {
 	window.render = {
@@ -7,13 +7,12 @@
 			let announcementsFragment = document.createDocumentFragment();
 
 			pinsArray.forEach(pinElement => {
-				// pinElement.classList.add("hidden");
-				// pinElement.hidden = true;
 				pinsFragment.append(pinElement);
 			});
-			announcementsArray.forEach(announcementElement =>
-				announcementsFragment.append(announcementElement)
-			);
+			announcementsArray.forEach(announcementElement => {
+				announcementElement.classList.add("hidden");
+				announcementsFragment.append(announcementElement);
+			});
 			mapPins.append(pinsFragment);
 			map.insertBefore(
 				announcementsFragment,
@@ -61,49 +60,6 @@
 		actualPins: []
 	};
 
-	// const NUMBER_OF_ANNOUNCEMENTS = 5;
-	// let actualAnnouncements = [];
 	let map = document.querySelector(".map");
 	let mapPins = map.querySelector(".map__pins");
-
-	// function successLoadCallback(response) {
-	// 	let announcementObjects = response;
-	// 	window.data["createPinElements"](announcementObjects);
-	// 	window.data["createAnnouncementElements"](announcementObjects);
-
-	// 	for (let i = 0; i < NUMBER_OF_ANNOUNCEMENTS; i++) {
-	// 		let announcementNumber = Math.floor(
-	// 			Math.random() * window.data["announcementElements"].length
-	// 		);
-	// 		if (
-	// 			!actualAnnouncements.includes(
-	// 				window.data["announcementElements"][announcementNumber]
-	// 			)
-	// 		) {
-	// 			actualAnnouncements.push(
-	// 				window.data["announcementElements"][announcementNumber]
-	// 			);
-	// 			window.render["actualPins"].push(
-	// 				window.data["pinElements"][announcementNumber]
-	// 			);
-	// 		} else {
-	// 			i--;
-	// 			continue;
-	// 		}
-	// 	}
-
-	// 	window.render["render"](
-	// 		actualAnnouncements,
-	// 		window.render["actualPins"]
-	// 	);
-	// }
-
-	// function failLoadCallback(errorMessage) {
-	// 	notification.classList.remove("hidden");
-	// 	notification.textContent = errorMessage;
-	// 	notification.style.color = "red";
-	// 	setTimeout(() => notification.classList.add("hidden"), TIMEOUT);
-	// }
-
-	// window.backend["load"](successLoadCallback, failLoadCallback);
 })();
