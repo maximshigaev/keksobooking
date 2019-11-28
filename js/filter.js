@@ -224,89 +224,38 @@
 			concat();
 		});
 
-		let featuresAnnouncements = window.data["announcementElements"].slice();
-		let currentCheckboxesSet = new Set();
+		const announcements = window.data["announcementElements"];
+		let featuresAnnouncements = announcements.slice();
+		let currentCheckboxes = new Set();
 
-		featuresCheckboxes.forEach(featuresCheckbox => {
-			featuresCheckbox.addEventListener("change", function() {
-				if (featuresCheckbox.matches(":checked")) {
+		featuresCheckboxes.forEach(fc => {
+			fc.addEventListener("change", function() {
+				let isMatched = fc.matches(":checked");
+
+				if (isMatched) {
 					featuresAnnouncements.length = 0;
-					currentCheckboxesSet.add(featuresCheckbox.value);
-
-					for (
-						let i = 0;
-						i < window.data["announcementElements"].length;
-						i++
-					) {
-						let flag = 0;
-
-						for (let currentCheckbox of currentCheckboxesSet) {
-							let featuresList = window.data[
-								"announcementElements"
-							][i].querySelector(".popup__features");
-
-							for (
-								let j = 0;
-								j < featuresList.children.length;
-								j++
-							) {
-								if (
-									featuresList.children[j].classList.contains(
-										`feature--${currentCheckbox}`
-									) &&
-									featuresList.children[j].style.display !==
-										"none"
-								) {
-									flag++;
-								}
-							}
-						}
-
-						if (flag === currentCheckboxesSet.size) {
-							featuresAnnouncements.push(
-								window.data["announcementElements"][i]
-							);
-						}
-					}
+					currentCheckboxes.add(fc.value);
 				} else {
-					currentCheckboxesSet.delete(featuresCheckbox.value);
-
-					for (
-						let i = 0;
-						i < window.data["announcementElements"].length;
-						i++
-					) {
-						let featuresList = window.data["announcementElements"][
-							i
-						].querySelector(".popup__features");
-						let flag = 0;
-
-						for (let currentCheckbox of currentCheckboxesSet) {
-							for (j = 0; j < featuresList.children.length; j++) {
-								if (
-									featuresList.children[j].classList.contains(
-										`feature--${currentCheckbox}`
-									) &&
-									featuresList.children[j].style.display !==
-										"none"
-								) {
-									flag++;
-								}
-							}
-						}
-
-						if (
-							flag === currentCheckboxesSet.size &&
-							!featuresAnnouncements.includes(
-								window.data["announcementElements"][i]
-							)
-						) {
-							featuresAnnouncements.push(
-								window.data["announcementElements"][i]
-							);
-						}
-					}
+					currentCheckboxes.delete(fc.value);
 				}
+
+				let size = currentCheckboxes.size;
+				announcements.forEach((a) => {
+					let count = 0;
+					let features = Array.from(a.querySelector(".popup__features").children);
+
+					for (let currentCheckbox of currentCheckboxes) {
+						features.forEach((f) => {
+							if (f.classList.contains(`feature--${currentCheckbox}`) && f.style.display !== "none") {
+								count++;
+							}
+						});
+					}
+					
+					if (count === size && (isMatched || !featuresAnnouncements.includes(a))) {
+						featuresAnnouncements.push(a);
+					}
+				});
 
 				concat();
 			});
