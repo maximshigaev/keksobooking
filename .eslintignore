@@ -1,1 +1,3 @@
-build/**
+webpack.config.js
+build
+postcss.config.js

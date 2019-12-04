@@ -1,0 +1,11 @@
+import backend from "./backend.js";
+import data from "./data.js";
+import render from "./render.js";
+import debounce from "./debounce.js";
+import filter from "./filter.js";
+import form from "./form.js";
+import mainMap from "./map.js";
+mainMap();
+import upload from "./upload.js";
+upload();
+import style from "../scss/style.scss";
